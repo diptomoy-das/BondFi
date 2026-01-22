@@ -1,22 +1,124 @@
 {
   "summary": {
-    "total_tests": 2,
-    "passed_tests": 1,
-    "success_rate": "50.0%",
-    "timestamp": "2026-01-22T21:07:59.497930"
+    "total_tests": 19,
+    "passed_tests": 18,
+    "success_rate": "94.7%",
+    "timestamp": "2026-01-22T21:08:10.079897"
   },
   "detailed_results": [
     {
       "test": "Root API Endpoint",
       "status": "PASS",
       "details": "Status: 200",
-      "timestamp": "2026-01-22T21:07:59.445615"
+      "timestamp": "2026-01-22T21:08:09.002218"
     },
     {
       "test": "User Registration",
+      "status": "PASS",
+      "details": "Status: 200",
+      "timestamp": "2026-01-22T21:08:09.324669"
+    },
+    {
+      "test": "User Login",
+      "status": "PASS",
+      "details": "Status: 200",
+      "timestamp": "2026-01-22T21:08:09.590574"
+    },
+    {
+      "test": "Get All Bonds",
+      "status": "PASS",
+      "details": "Status: 200",
+      "timestamp": "2026-01-22T21:08:09.630486"
+    },
+    {
+      "test": "Bond Data Validation",
+      "status": "PASS",
+      "details": "Found 8 bonds",
+      "timestamp": "2026-01-22T21:08:09.631082"
+    },
+    {
+      "test": "Get Single Bond (bond_us_1)",
+      "status": "PASS",
+      "details": "Status: 200",
+      "timestamp": "2026-01-22T21:08:09.670705"
+    },
+    {
+      "test": "Get Wallet",
+      "status": "PASS",
+      "details": "Status: 200",
+      "timestamp": "2026-01-22T21:08:09.718625"
+    },
+    {
+      "test": "Initial USDC Balance",
+      "status": "PASS",
+      "details": "Balance: $100.0",
+      "timestamp": "2026-01-22T21:08:09.719329"
+    },
+    {
+      "test": "Wallet Top-up",
+      "status": "PASS",
+      "details": "Status: 200",
+      "timestamp": "2026-01-22T21:08:09.773884"
+    },
+    {
+      "test": "Top-up Balance Update",
+      "status": "PASS",
+      "details": "New balance: $125.0",
+      "timestamp": "2026-01-22T21:08:09.774585"
+    },
+    {
+      "test": "Get Portfolio (Empty)",
+      "status": "PASS",
+      "details": "Status: 200",
+      "timestamp": "2026-01-22T21:08:09.820729"
+    },
+    {
+      "test": "Portfolio Structure",
+      "status": "PASS",
+      "details": "All required fields present",
+      "timestamp": "2026-01-22T21:08:09.821338"
+    },
+    {
+      "test": "Buy Bond (bond_us_1)",
+      "status": "PASS",
+      "details": "Status: 200",
+      "timestamp": "2026-01-22T21:08:09.914988"
+    },
+    {
+      "test": "Transaction Structure",
+      "status": "PASS",
+      "details": "Received 5.0 tokens",
+      "timestamp": "2026-01-22T21:08:09.915816"
+    },
+    {
+      "test": "Get Portfolio (With Holdings)",
+      "status": "PASS",
+      "details": "Status: 200",
+      "timestamp": "2026-01-22T21:08:09.957204"
+    },
+    {
+      "test": "Portfolio Holdings",
+      "status": "PASS",
+      "details": "1 holdings, $5.1 total value, 5.0 tokens",
+      "timestamp": "2026-01-22T21:08:09.957823"
+    },
+    {
+      "test": "Get Transactions",
+      "status": "PASS",
+      "details": "Status: 200",
+      "timestamp": "2026-01-22T21:08:09.995800"
+    },
+    {
+      "test": "Transaction History",
+      "status": "PASS",
+      "details": "Found 1 transactions",
+      "timestamp": "2026-01-22T21:08:09.996498"
+    },
+    {
+      "test": "Protected Route (No Auth)",
       "status": "FAIL",
-      "details": "Expected 200, got 422. Error: [{'type': 'value_error', 'loc': ['body', 'email'], 'msg': 'value is not a valid email address: The part after the @-sign is a special-use or reserved name that cannot be used with email.', 'input': 'test_user_210759@bondfi.test', 'ctx': {'reason': 'The part after the @-sign is a special-use or reserved name that cannot be used with email.'}}]",
-      "timestamp": "2026-01-22T21:07:59.497079"
+      "details": "Expected 401, got 403. Error: Not authenticated",
+      "timestamp": "2026-01-22T21:08:10.079038"
     }
   ]
 }
