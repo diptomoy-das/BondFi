@@ -1,0 +1,122 @@
+{
+  "design_system": {
+    "typography": {
+      "font_family": {
+        "heading": "JetBrains Mono, monospace",
+        "body": "Inter, sans-serif"
+      },
+      "imports": [
+        "@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap');"
+      ],
+      "scale": {
+        "h1": "text-4xl md:text-5xl font-bold tracking-tight",
+        "h2": "text-3xl font-bold tracking-tight",
+        "h3": "text-2xl font-semibold tracking-tight",
+        "body": "text-base leading-relaxed",
+        "mono_label": "font-mono text-xs uppercase tracking-wider text-muted-foreground"
+      }
+    },
+    "colors": {
+      "palette": {
+        "background": "#09090b",
+        "foreground": "#fafafa",
+        "card": "#18181b",
+        "card_foreground": "#fafafa",
+        "popover": "#18181b",
+        "popover_foreground": "#fafafa",
+        "primary": "#10b981",
+        "primary_foreground": "#09090b",
+        "secondary": "#06b6d4",
+        "secondary_foreground": "#09090b",
+        "muted": "#27272a",
+        "muted_foreground": "#a1a1aa",
+        "accent": "#27272a",
+        "accent_foreground": "#fafafa",
+        "destructive": "#ef4444",
+        "destructive_foreground": "#fafafa",
+        "border": "#27272a",
+        "input": "#27272a",
+        "ring": "#10b981"
+      },
+      "gradients": {
+        "hero_glow": "radial-gradient(circle at center, rgba(16, 185, 129, 0.15) 0%, rgba(9, 9, 11, 0) 70%)",
+        "card_hover": "linear-gradient(180deg, rgba(39, 39, 42, 0) 0%, rgba(16, 185, 129, 0.05) 100%)",
+        "chart_line": "linear-gradient(90deg, #10b981 0%, #06b6d4 100%)"
+      }
+    },
+    "spacing": {
+      "container_padding": "p-6 md:p-8 lg:p-12",
+      "section_gap": "gap-8 md:gap-12",
+      "element_gap": "gap-4"
+    },
+    "borders": {
+      "radius": {
+        "default": "0.5rem",
+        "card": "0.75rem",
+        "button": "0.375rem"
+      },
+      "width": "1px",
+      "style": "solid"
+    },
+    "shadows": {
+      "glow_sm": "0 0 10px -2px rgba(16, 185, 129, 0.2)",
+      "glow_md": "0 0 20px -5px rgba(16, 185, 129, 0.3)",
+      "glow_lg": "0 0 30px -10px rgba(6, 182, 212, 0.4)"
+    }
+  },
+  "components": {
+    "buttons": {
+      "primary": "bg-primary text-primary-foreground hover:bg-primary/90 shadow-[0_0_15px_-3px_rgba(16,185,129,0.4)] transition-all duration-300 font-mono uppercase tracking-wide text-sm",
+      "secondary": "bg-secondary text-secondary-foreground hover:bg-secondary/90 font-mono uppercase tracking-wide text-sm",
+      "outline": "border border-input bg-background hover:bg-accent hover:text-accent-foreground font-mono uppercase tracking-wide text-sm",
+      "ghost": "hover:bg-accent hover:text-accent-foreground"
+    },
+    "cards": {
+      "base": "bg-card text-card-foreground border border-border shadow-sm relative overflow-hidden group",
+      "hover_effect": "hover:border-primary/50 transition-colors duration-300",
+      "glass": "bg-black/40 backdrop-blur-xl border-white/10"
+    },
+    "inputs": {
+      "base": "bg-input/50 border-input focus-visible:ring-primary font-mono text-sm placeholder:text-muted-foreground/50"
+    },
+    "badges": {
+      "verified": "bg-primary/10 text-primary border border-primary/20 font-mono text-[10px] uppercase tracking-wider flex items-center gap-1.5 px-2 py-0.5 rounded-full",
+      "yield": "bg-secondary/10 text-secondary border border-secondary/20 font-mono text-xs"
+    }
+  },
+  "layout_strategies": {
+    "dashboard_grid": "grid grid-cols-1 md:grid-cols-12 gap-6 auto-rows-[minmax(180px,auto)]",
+    "marketplace_grid": "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6",
+    "sidebar": "hidden md:flex flex-col w-64 border-r border-border bg-card/50 backdrop-blur-sm h-screen sticky top-0"
+  },
+  "assets": {
+    "images": {
+      "hero_bg": "https://images.unsplash.com/photo-1744070018851-5b2f5a3d1d81?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzMzN8MHwxfHNlYXJjaHwyfHxhYnN0cmFjdCUyMGRpZ2l0YWwlMjBmaW5hbmNlJTIwbmV0d29yayUyMGRhcmslMjBiYWNrZ3JvdW5kfGVufDB8fHx8MTc2OTExNTQ1Mnww&ixlib=rb-4.1.0&q=85",
+      "student_profile": "https://images.unsplash.com/photo-1513746199652-7a5904642685?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxODd8MHwxfHNlYXJjaHwxfHxzdHVkZW50JTIwdXNpbmclMjBsYXB0b3AlMjBkYXJrJTIwcm9vbXxlbnwwfHx8fDE3NjkxMTU0NTZ8MA&ixlib=rb-4.1.0&q=85",
+      "us_flag": "https://images.unsplash.com/photo-1703319953138-b5a0d5024697?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDk1ODF8MHwxfHNlYXJjaHw0fHxVUyUyMGZsYWclMjBjaXJjdWxhciUyMGljb258ZW58MHx8fHwxNzY5MTE1NDU3fDA&ixlib=rb-4.1.0&q=85",
+      "stellar_badge": "https://cryptologos.cc/logos/stellar-xlm-logo.png?v=029"
+    },
+    "icons": {
+      "library": "lucide-react",
+      "preferred_icons": ["Wallet", "TrendingUp", "ShieldCheck", "LayoutDashboard", "BookOpen", "ArrowRightLeft", "LogOut", "User"]
+    }
+  },
+  "instructions_to_main_agent": [
+    "1. THEME SETUP: Update 'tailwind.config.js' to use the specific colors defined in 'design_system.colors.palette'. Ensure 'darkMode' is set to 'class'.",
+    "2. FONT SETUP: Add the Google Fonts import to 'index.css' immediately. Apply 'font-sans' (Inter) to body and 'font-mono' (JetBrains Mono) to headings and data values.",
+    "3. LAYOUT: Implement the 'Dashboard' using the 'Bento Grid' strategy. The 'Yield Visualization' chart should span 2 columns (col-span-2).",
+    "4. COMPONENTS: Customize Shadcn components. Remove rounded-xl, use rounded-lg or rounded-md. Add the 'glow' effects to active states.",
+    "5. CHARTS: Use 'Recharts'. Style them with the 'gradients.chart_line'. Hide grid lines (stroke='transparent') for a cleaner look. Use 'Tooltip' with a custom dark background.",
+    "6. DATA-TESTID: Every interactive element (buttons, inputs, cards) MUST have a 'data-testid' attribute (e.g., 'buy-bond-button', 'yield-chart').",
+    "7. MOCK DATA: Create a 'mockData.js' file to simulate the Bond API response (id, country, yield, maturity, price, flag_url).",
+    "8. AUTH: Create a simple JWT-based auth flow (mocked if backend not ready) with a 'Login' page that uses the 'hero_bg' image.",
+    "9. VERIFICATION: Add the 'Verified on Stellar' badge to the footer or sidebar using the provided asset URL."
+  ],
+  "universal_guidelines": [
+    "Do not use gradients for backgrounds, only for accents or text.",
+    "Ensure all text has sufficient contrast (WCAG AA).",
+    "Use 'sonner' for notifications.",
+    "Avoid 'lorem ipsum'. Use realistic financial copy.",
+    "Never use 'alert()' for errors. Use UI toasts."
+  ]
+}
