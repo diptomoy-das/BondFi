@@ -80,7 +80,7 @@ class BondDAppAPITester:
     def test_user_registration(self):
         """Test user registration"""
         timestamp = datetime.now().strftime('%H%M%S')
-        self.user_email = f"test_user_{timestamp}@bondfi.test"
+        self.user_email = f"test_user_{timestamp}@example.com"
         
         user_data = {
             "name": f"Test User {timestamp}",
