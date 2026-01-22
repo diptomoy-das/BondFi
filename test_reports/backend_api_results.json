@@ -1,0 +1,22 @@
+{
+  "summary": {
+    "total_tests": 2,
+    "passed_tests": 1,
+    "success_rate": "50.0%",
+    "timestamp": "2026-01-22T21:07:59.497930"
+  },
+  "detailed_results": [
+    {
+      "test": "Root API Endpoint",
+      "status": "PASS",
+      "details": "Status: 200",
+      "timestamp": "2026-01-22T21:07:59.445615"
+    },
+    {
+      "test": "User Registration",
+      "status": "FAIL",
+      "details": "Expected 200, got 422. Error: [{'type': 'value_error', 'loc': ['body', 'email'], 'msg': 'value is not a valid email address: The part after the @-sign is a special-use or reserved name that cannot be used with email.', 'input': 'test_user_210759@bondfi.test', 'ctx': {'reason': 'The part after the @-sign is a special-use or reserved name that cannot be used with email.'}}]",
+      "timestamp": "2026-01-22T21:07:59.497079"
+    }
+  ]
+}
