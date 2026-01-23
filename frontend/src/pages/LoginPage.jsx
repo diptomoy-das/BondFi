@@ -4,12 +4,9 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { toast } from 'sonner';
-import axios from 'axios';
+import api from '../utils/api';
 import { setToken } from '../utils/auth';
 import { ShieldCheck } from 'lucide-react';
-
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-const API = `${BACKEND_URL}/api`;
 
 export const LoginPage = () => {
   const [email, setEmail] = useState('');
@@ -22,7 +19,7 @@ export const LoginPage = () => {
     setLoading(true);
 
     try {
-      const response = await axios.post(`${API}/auth/login`, { email, password });
+      const response = await api.post('/api/auth/login', { email, password });
       setToken(response.data.token);
       toast.success('Login successful!');
       navigate('/dashboard');

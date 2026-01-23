@@ -4,12 +4,9 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { toast } from 'sonner';
-import axios from 'axios';
+import api from '../utils/api';
 import { setToken } from '../utils/auth';
 import { ShieldCheck } from 'lucide-react';
-
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-const API = `${BACKEND_URL}/api`;
 
 export const RegisterPage = () => {
   const [name, setName] = useState('');
@@ -23,7 +20,7 @@ export const RegisterPage = () => {
     setLoading(true);
 
     try {
-      const response = await axios.post(`${API}/auth/register`, { name, email, password });
+      const response = await api.post('/api/auth/register', { name, email, password });
       setToken(response.data.token);
       toast.success('Account created! Welcome to BondFi');
       navigate('/dashboard');

@@ -49,7 +49,7 @@ export const WalletPage = () => {
 
     setTopping(true);
     try {
-      await api.post(`/wallet/topup?amount=${parseFloat(topupAmount)}`);
+      await api.post('/wallet/topup', { amount: parseFloat(topupAmount) });
       toast.success('Top-up successful!');
       setShowTopup(false);
       setTopupAmount('');

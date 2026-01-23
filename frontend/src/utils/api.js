@@ -1,19 +1,8 @@
-import axios from 'axios';
-import { getToken } from './auth';
+import { mockApi } from './mockBackend';
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-export const API = `${BACKEND_URL}/api`;
+// For now, we are forcing the use of mockApi because the real backend is down.
+// In the future, we can toggle this based on an env var like VITE_USE_MOCK.
 
-const api = axios.create({
-  baseURL: API,
-});
-
-api.interceptors.request.use((config) => {
-  const token = getToken();
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-  return config;
-});
+const api = mockApi;
 
 export default api;
