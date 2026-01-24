@@ -87,7 +87,7 @@ export const LandingPage = () => {
         <nav className="relative z-10 px-6 py-4 flex items-center justify-between border-b border-border backdrop-blur-sm" data-testid="landing-navbar">
           <div className="flex items-center gap-2">
             <h1 className="text-2xl font-mono font-bold text-primary">BondFi</h1>
-            <span className="text-xs font-mono uppercase tracking-wider text-muted-foreground">Beta</span>
+
           </div>
           <div className="flex items-center gap-4">
             <Button variant="ghost" onClick={() => navigate('/login')} className="font-mono uppercase tracking-wide text-sm">
