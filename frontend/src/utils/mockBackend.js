@@ -138,7 +138,7 @@ export const mockApi = {
         await delay(500);
         console.log(`[MOCK GET] ${url}`);
 
-        if (url.includes('/api/bonds/') && !url.endsWith('/bonds')) {
+        if (url.includes('/bonds/') && !url.endsWith('/bonds')) {
             const id = url.split('/').pop();
             const bond = MOCK_BONDS.find(b => b.id === id);
             if (bond) return { data: bond };
@@ -146,10 +146,10 @@ export const mockApi = {
         }
 
         switch (true) {
-            case url.endsWith('/api/bonds'):
+            case url.endsWith('/bonds'):
                 return { data: MOCK_BONDS };
 
-            case url.endsWith('/api/portfolio'): {
+            case url.endsWith('/portfolio'): {
                 const email = getEmailFromToken();
                 const transactions = getStorage(STORAGE_KEYS.TRANSACTIONS).filter(t => t.email === email && t.transaction_type === 'buy');
 
@@ -181,17 +181,29 @@ export const mockApi = {
                     return h;
                 });
 
+                // Generate 30-day earnings history
+                const earnings_history = [];
+                for (let i = 0; i < 30; i++) {
+                    const date = new Date();
+                    date.setDate(date.getDate() - (29 - i));
+                    const dateStr = date.toISOString().split('T')[0];
+                    // Simulate a growing curve ending at totalVal
+                    // If totalVal is 0, we can fake a theoretical growth or just show 0
+                    const val = totalVal > 0 ? totalVal * (0.7 + (i / 30) * 0.3) : 0;
+                    earnings_history.push({ date: dateStr, value: parseFloat(val.toFixed(2)) });
+                }
+
                 return {
                     data: {
                         total_value: totalVal,
                         total_tokens: totalTok,
                         holdings,
-                        earnings_history: [] // Mock empty for now
+                        earnings_history
                     }
                 };
             }
 
-            case url.endsWith('/api/wallet'): {
+            case url.endsWith('/wallet'): {
                 const email = getEmailFromToken();
                 const wallets = getStorage(STORAGE_KEYS.WALLETS);
                 const wallet = wallets.find(w => w.email === email);
@@ -199,7 +211,7 @@ export const mockApi = {
                 throw { response: { status: 404, data: { detail: 'Wallet not found' } } };
             }
 
-            case url.endsWith('/api/transactions'): {
+            case url.endsWith('/transactions'): {
                 const email = getEmailFromToken();
                 const txns = getStorage(STORAGE_KEYS.TRANSACTIONS)
                     .filter(t => t.email === email)
@@ -216,7 +228,7 @@ export const mockApi = {
         await delay(800);
         console.log(`[MOCK POST] ${url}`, body);
 
-        if (url.endsWith('/api/auth/register')) {
+        if (url.endsWith('/auth/register')) {
             const users = getStorage(STORAGE_KEYS.USERS);
             if (users.find(u => u.email === body.email)) {
                 throw { response: { data: { detail: 'Email already registered' } } };
@@ -235,7 +247,7 @@ export const mockApi = {
             return { data: { token, user: newUser } };
         }
 
-        if (url.endsWith('/api/auth/login')) {
+        if (url.endsWith('/auth/login')) {
             const users = getStorage(STORAGE_KEYS.USERS);
             const user = users.find(u => u.email === body.email && u.password === body.password);
 
@@ -247,7 +259,7 @@ export const mockApi = {
             return { data: { token, user } };
         }
 
-        if (url.endsWith('/api/wallet/topup')) {
+        if (url.endsWith('/wallet/topup')) {
             const email = getEmailFromToken();
             const wallets = getStorage(STORAGE_KEYS.WALLETS);
             const walletIndex = wallets.findIndex(w => w.email === email);
@@ -310,7 +322,7 @@ export const mockApi = {
             return { data: { message: "Top-up successful", new_balance: wallets[walletIndex].usdc_balance } };
         }
 
-        if (url.endsWith('/api/transactions/buy')) {
+        if (url.endsWith('/transactions/buy')) {
             const email = getEmailFromToken();
             const wallets = getStorage(STORAGE_KEYS.WALLETS);
             const walletIndex = wallets.findIndex(w => w.email === email);
