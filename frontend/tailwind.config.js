@@ -1,12 +1,12 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  darkMode: 'class',
+  darkMode: 'class', //
   content: [
-    './src/**/*.{js,jsx,ts,tsx}',
+    './src/**/*.{js,jsx,ts,tsx}', //
   ],
   theme: {
     extend: {
-      colors: {
+      colors: { //
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',
@@ -41,35 +41,47 @@ module.exports = {
           foreground: 'hsl(var(--card-foreground))',
         },
       },
-      borderRadius: {
+      borderRadius: { //
         lg: '0.75rem',
         md: '0.5rem',
         sm: '0.375rem',
       },
-      fontFamily: {
+      fontFamily: { //
         sans: ['Inter', 'sans-serif'],
         mono: ['JetBrains Mono', 'monospace'],
       },
-      boxShadow: {
+      boxShadow: { //
         'glow-sm': '0 0 10px -2px rgba(16, 185, 129, 0.2)',
         'glow-md': '0 0 20px -5px rgba(16, 185, 129, 0.3)',
         'glow-lg': '0 0 30px -10px rgba(6, 182, 212, 0.4)',
       },
       keyframes: {
-        'accordion-down': {
+        'accordion-down': { //
           from: { height: '0' },
           to: { height: 'var(--radix-accordion-content-height)' },
         },
-        'accordion-up': {
+        'accordion-up': { //
           from: { height: 'var(--radix-accordion-content-height)' },
           to: { height: '0' },
         },
+        // Magic UI: Marquee Keyframes
+        marquee: {
+          from: { transform: "translateX(0)" },
+          to: { transform: "translateX(calc(-100% - var(--gap)))" },
+        },
+        "marquee-vertical": {
+          from: { transform: "translateY(0)" },
+          to: { transform: "translateY(calc(-100% - var(--gap)))" },
+        },
       },
       animation: {
-        'accordion-down': 'accordion-down 0.2s ease-out',
-        'accordion-up': 'accordion-up 0.2s ease-out',
+        'accordion-down': 'accordion-down 0.2s ease-out', //
+        'accordion-up': 'accordion-up 0.2s ease-out', //
+        // Magic UI: Marquee Animations
+        marquee: "marquee var(--duration) linear infinite",
+        "marquee-vertical": "marquee-vertical var(--duration) linear infinite",
       },
     },
   },
-  plugins: [require('tailwindcss-animate')],
+  plugins: [require('tailwindcss-animate')], //
 }

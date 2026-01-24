@@ -37,6 +37,11 @@ code {
         --input: 240 3.7% 15.9%;
         --ring: 142 71% 45%;
         --radius: 0.5rem;
+
+        /* --- MAGIC UI FIX --- */
+        /* These variables are required for the Marquee animation to calculate spacing and speed */
+        --gap: 1rem;
+        --duration: 40s;
     }
 }
 
@@ -44,17 +49,19 @@ code {
     * {
         @apply border-border;
     }
+
     body {
         @apply bg-background text-foreground;
     }
 }
 
+/* Debug wrapper logic remains intact */
 @layer base {
     [data-debug-wrapper="true"] {
         display: contents !important;
     }
 
-    [data-debug-wrapper="true"] > * {
+    [data-debug-wrapper="true"]>* {
         margin-left: inherit;
         margin-right: inherit;
         margin-top: inherit;
