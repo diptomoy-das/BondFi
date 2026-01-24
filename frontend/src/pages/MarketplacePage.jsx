@@ -13,6 +13,7 @@ import { Label } from '@/components/ui/label';
 import { ShieldCheck } from 'lucide-react';
 import api from '../utils/api';
 import { toast } from 'sonner';
+import { buyBondToken } from '../utils/soroban';
 
 export const MarketplacePage = () => {
   const [bonds, setBonds] = useState([]);
@@ -65,10 +66,24 @@ export const MarketplacePage = () => {
 
     setBuying(true);
     try {
+      // 1. Backend: Mock Payment (USDC deduction)
       await api.post('/transactions/buy', {
         bond_id: selectedBond.id,
         amount: parseFloat(buyAmount),
       });
+
+      // 2. Blockchain: Atomic Swap (Soroban)
+      if (wallet && wallet.usdc_balance) {
+        try {
+          const userAddress = "G...USER_ADDRESS"; // Placeholder for demo
+          // Atomic Buy: One transaction handles Payment + Minting
+          await buyBondToken(userAddress, parseFloat(buyAmount));
+          toast.success("Atomic Swap on Stellar: USDC sent, Bond Tokens received.");
+        } catch (e) {
+          console.warn("Soroban atomic buy skipped/failed (expected in mock env)", e);
+        }
+      }
+
       toast.success(`Successfully purchased ${buyAmount} ${selectedBond.country} bond tokens!`);
       setSelectedBond(null);
       setBuyAmount('');

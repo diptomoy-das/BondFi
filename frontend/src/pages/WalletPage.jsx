@@ -13,6 +13,7 @@ import {
 import { Wallet as WalletIcon, Plus, ArrowUpRight, ArrowDownRight } from 'lucide-react';
 import api from '../utils/api';
 import { toast } from 'sonner';
+import { isConnected, requestAccess } from '@stellar/freighter-api';
 
 export const WalletPage = () => {
   const [wallet, setWallet] = useState(null);
@@ -21,6 +22,7 @@ export const WalletPage = () => {
   const [showTopup, setShowTopup] = useState(false);
   const [topupAmount, setTopupAmount] = useState('');
   const [topping, setTopping] = useState(false);
+  const [walletAddress, setWalletAddress] = useState(null);
 
   useEffect(() => {
     fetchWalletData();
@@ -38,6 +40,34 @@ export const WalletPage = () => {
       toast.error('Failed to load wallet data');
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleConnectWallet = async () => {
+    try {
+      const installed = await isConnected();
+      if (!installed) {
+        toast.error('Freighter extension not installed');
+        return;
+      }
+
+      const { address, error } = await requestAccess();
+
+      if (error) {
+        toast.error(`Connection failed: ${error}`);
+        return;
+      }
+
+      if (!address) {
+        toast.error('User denied access');
+        return;
+      }
+
+      setWalletAddress(address);
+      toast.success('Wallet connected!');
+    } catch (error) {
+      console.error(error);
+      toast.error(`Connection failed: ${error.message || 'Unknown error'}`);
     }
   };
 
@@ -98,14 +128,33 @@ export const WalletPage = () => {
             </div>
           </div>
 
-          <Button
-            onClick={() => setShowTopup(true)}
-            data-testid="topup-button"
-            className="w-full md:w-auto bg-primary text-primary-foreground hover:bg-primary/90 shadow-glow-sm font-mono uppercase tracking-wide"
-          >
-            <Plus className="w-4 h-4 mr-2" />
-            Add Funds
-          </Button>
+          <div className="flex gap-4">
+            <Button
+              onClick={() => setShowTopup(true)}
+              data-testid="topup-button"
+              className="bg-primary text-primary-foreground hover:bg-primary/90 shadow-glow-sm font-mono uppercase tracking-wide"
+            >
+              <Plus className="w-4 h-4 mr-2" />
+              Add Funds
+            </Button>
+
+            {!walletAddress ? (
+              <Button
+                variant="outline"
+                onClick={handleConnectWallet}
+                className="font-mono uppercase tracking-wide border-primary text-primary hover:bg-primary/10"
+              >
+                Connect Freighter
+              </Button>
+            ) : (
+              <div className="flex flex-col justify-center px-4 py-2 border border-primary/20 rounded-md bg-primary/5">
+                <span className="text-[10px] text-muted-foreground font-mono uppercase tracking-wider">Connected Wallet</span>
+                <span className="text-xs font-mono text-primary font-bold truncate max-w-[150px]">
+                  {walletAddress.slice(0, 4)}...{walletAddress.slice(-4)}
+                </span>
+              </div>
+            )}
+          </div>
         </div>
 
         <div>
