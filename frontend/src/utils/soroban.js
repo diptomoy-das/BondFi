@@ -54,10 +54,17 @@ export const buyBondToken = async (userAddress, amount) => {
     const signedXdr = await signTransaction(tx.toXDR(), { networkPassphrase: StellarSdk.Networks.TESTNET });
 
     if (signedXdr) {
-      console.log("Transaction signed! Submitting to network...");
-      const result = await server.submitTransaction(new StellarSdk.Transaction(signedXdr, StellarSdk.Networks.TESTNET));
-      console.log("Transaction Success! Hash:", result.hash);
-      return { status: "success", txHash: result.hash };
+      console.log("Transaction signed! parsing XDR...");
+      try {
+        const transactionToSubmit = StellarSdk.TransactionBuilder.fromXDR(signedXdr, StellarSdk.Networks.TESTNET);
+        console.log("Submitting to network...");
+        const result = await server.submitTransaction(transactionToSubmit);
+        console.log("Transaction Success! Hash:", result.hash);
+        return { status: "success", txHash: result.hash };
+      } catch (innerError) {
+        console.error("Error submitting transaction:", innerError);
+        throw new Error(`Submission Failed: ${innerError.message}`);
+      }
     } else {
       throw new Error("User rejected signature");
     }
