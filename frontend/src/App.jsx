@@ -10,57 +10,60 @@ import { WalletPage } from "./pages/WalletPage";
 import { EducationPage } from "./pages/EducationPage";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import { isAuthenticated } from "./utils/auth";
+import { WalletProvider } from "./context/WalletContext";
 
 function App() {
   return (
     <div className="App dark">
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<LandingPage />} />
-          <Route
-            path="/login"
-            element={isAuthenticated() ? <Navigate to="/dashboard" replace /> : <LoginPage />}
-          />
-          <Route
-            path="/register"
-            element={isAuthenticated() ? <Navigate to="/dashboard" replace /> : <RegisterPage />}
-          />
-          <Route
-            path="/dashboard"
-            element={
-              <ProtectedRoute>
-                <DashboardPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/marketplace"
-            element={
-              <ProtectedRoute>
-                <MarketplacePage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/wallet"
-            element={
-              <ProtectedRoute>
-                <WalletPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/education"
-            element={
-              <ProtectedRoute>
-                <EducationPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
-      </BrowserRouter>
-      <Toaster position="top-right" />
+      <WalletProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<LandingPage />} />
+            <Route
+              path="/login"
+              element={isAuthenticated() ? <Navigate to="/dashboard" replace /> : <LoginPage />}
+            />
+            <Route
+              path="/register"
+              element={isAuthenticated() ? <Navigate to="/dashboard" replace /> : <RegisterPage />}
+            />
+            <Route
+              path="/dashboard"
+              element={
+                <ProtectedRoute>
+                  <DashboardPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/marketplace"
+              element={
+                <ProtectedRoute>
+                  <MarketplacePage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/wallet"
+              element={
+                <ProtectedRoute>
+                  <WalletPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/education"
+              element={
+                <ProtectedRoute>
+                  <EducationPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </BrowserRouter>
+        <Toaster position="top-right" />
+      </WalletProvider>
     </div>
   );
 }

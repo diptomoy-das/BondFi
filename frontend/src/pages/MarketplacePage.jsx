@@ -14,8 +14,10 @@ import { ShieldCheck } from 'lucide-react';
 import api from '../utils/api';
 import { toast } from 'sonner';
 import { buyBondToken } from '../utils/soroban';
+import { useWallet } from '../context/WalletContext';
 
 export const MarketplacePage = () => {
+  const { address: walletAddress, connect } = useWallet();
   const [bonds, setBonds] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedBond, setSelectedBond] = useState(null);
@@ -75,12 +77,25 @@ export const MarketplacePage = () => {
       // 2. Blockchain: Atomic Swap (Soroban)
       if (wallet && wallet.usdc_balance) {
         try {
-          const userAddress = "G...USER_ADDRESS"; // Placeholder for demo
+          // Use real wallet address from context if available, otherwise prompt/error
+          let userAddress = walletAddress;
+
+          if (!userAddress) {
+            console.log("Wallet not connected in app context, trying to connect now...");
+            userAddress = await connect();
+            if (!userAddress) throw new Error("Wallet connection required for transaction");
+          }
+
           // Atomic Buy: One transaction handles Payment + Minting
-          await buyBondToken(userAddress, parseFloat(buyAmount));
-          toast.success("Atomic Swap on Stellar: USDC sent, Bond Tokens received.");
+          const result = await buyBondToken(userAddress, parseFloat(buyAmount));
+          toast.success("Transaction Submitted!", {
+            description: `Hash: ${result.txHash}. Copied to clipboard.`,
+            duration: 10000,
+          });
+          navigator.clipboard.writeText(result.txHash);
         } catch (e) {
-          console.warn("Soroban atomic buy skipped/failed (expected in mock env)", e);
+          console.warn("Soroban atomic buy failed", e);
+          toast.error("Blockchain transaction failed: " + e.message);
         }
       }
 

@@ -14,15 +14,16 @@ import { Wallet as WalletIcon, Plus, ArrowUpRight, ArrowDownRight } from 'lucide
 import api from '../utils/api';
 import { toast } from 'sonner';
 import { isConnected, requestAccess } from '@stellar/freighter-api';
+import { useWallet } from '../context/WalletContext';
 
 export const WalletPage = () => {
+  const { address: walletAddress, connect } = useWallet();
   const [wallet, setWallet] = useState(null);
   const [transactions, setTransactions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showTopup, setShowTopup] = useState(false);
   const [topupAmount, setTopupAmount] = useState('');
   const [topping, setTopping] = useState(false);
-  const [walletAddress, setWalletAddress] = useState(null);
 
   useEffect(() => {
     fetchWalletData();
@@ -44,31 +45,7 @@ export const WalletPage = () => {
   };
 
   const handleConnectWallet = async () => {
-    try {
-      const installed = await isConnected();
-      if (!installed) {
-        toast.error('Freighter extension not installed');
-        return;
-      }
-
-      const { address, error } = await requestAccess();
-
-      if (error) {
-        toast.error(`Connection failed: ${error}`);
-        return;
-      }
-
-      if (!address) {
-        toast.error('User denied access');
-        return;
-      }
-
-      setWalletAddress(address);
-      toast.success('Wallet connected!');
-    } catch (error) {
-      console.error(error);
-      toast.error(`Connection failed: ${error.message || 'Unknown error'}`);
-    }
+    await connect();
   };
 
   const handleTopup = async () => {
