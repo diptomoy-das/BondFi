@@ -7,12 +7,12 @@ import * as StellarSdk from "@stellar/stellar-sdk";
 
 // Helper to get client (assuming Futurenet for test)
 // In a real app, this would be configurable
-const server = new StellarSdk.Horizon.Server("https://horizon-futurenet.stellar.org");
-const rpcUrl = "https://rpc-futurenet.stellar.org"; // Soroban RPC
+const server = new StellarSdk.Horizon.Server("https://horizon-testnet.stellar.org");
+const rpcUrl = "https://rpc-testnet.stellar.org"; // Soroban RPC
 
 // ID of the deployed contract (Mock ID for now, user needs to deploy and replace)
 // This is a placeholder address.
-const BOND_TOKEN_CONTRACT_ID = "CBOND_TOKEN_PLACEHOLDER_ID";
+const BOND_TOKEN_CONTRACT_ID = "CDLQE2E5A2XVRJOCSS3VUCZXDYCO33PWSR36LLOKLUWJPQPA4V2YSW4T";
 
 export const mintBondToken = async (userAddress, amount) => {
   if (!(await isConnected())) {
@@ -103,7 +103,7 @@ export const buyBondToken = async (userAddress, amount) => {
       .build();
 
     // 3. Request Signing from Freighter
-    const signedXdr = await signTransaction(tx.toXDR(), { networkPassphrase: StellarSdk.Networks.FUTURENET });
+    const signedXdr = await signTransaction(tx.toXDR(), { networkPassphrase: StellarSdk.Networks.TESTNET });
 
     if (signedXdr) {
       console.log("Transaction signed!", signedXdr);

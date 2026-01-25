@@ -1,0 +1,16 @@
+[package]
+name = "bond_token"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+soroban-sdk = "20.0.0"
+# Add 'default-features = false' and 'features = ["next"]' to stellar-xdr
+stellar-xdr = { version = "20.0.0", default-features = false, features = ["next"] }
+
+[profile.release]
+opt-level = "z"
+overflow-checks = true
