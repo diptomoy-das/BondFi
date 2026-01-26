@@ -105,6 +105,18 @@ export const WalletPage = () => {
             </div>
           </div>
 
+          <div className="flex items-start justify-between mb-8 border-t border-border/50 pt-4">
+            <div>
+              <p className="font-mono text-xs uppercase tracking-wider text-muted-foreground mb-2">
+                Stablecoins Earned
+              </p>
+              <p className="text-3xl font-mono font-bold text-secondary">
+                {wallet?.stablecoin_count || 0}
+              </p>
+              <p className="text-sm text-muted-foreground font-mono mt-2">Tokens</p>
+            </div>
+          </div>
+
           <div className="flex gap-4">
             <Button
               onClick={() => setShowTopup(true)}

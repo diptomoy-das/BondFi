@@ -1,39 +1,76 @@
-#![no_std]
-use soroban_sdk::{contract, contractimpl, Address, Env, token, symbol_short};
+import {
+  isConnected,
+  requestAccess,
+  signTransaction,
+} from "@stellar/freighter-api";
+import * as StellarSdk from "@stellar/stellar-sdk";
 
-#[contract]
-pub struct BondMarketplace;
+const server = new StellarSdk.Horizon.Server("https://horizon-testnet.stellar.org");
 
-#[contractimpl]
-impl BondMarketplace {
-    /// Buys a fraction of a bond. 
-    /// The user sends payment_amount in a stablecoin (e.g., USDC) 
-    /// and receives an equivalent amount of BondTokens.
-    pub fn buy_bond(
-        env: Env, 
-        buyer: Address, 
-        payment_token: Address, 
-        bond_token: Address, 
-        amount: i128
-    ) {
-        // 1. Authenticate the buyer
-        buyer.require_auth();
+// Your BondMarketplace Contract ID
+const MARKETPLACE_CONTRACT_ID = "CDLQE2E5A2XVRJOCSS3VUCZXDYCO33PWSR36LLOKLUWJPQPA4V2YSW4T";
 
-        // 2. Setup clients for the tokens
-        let payment_client = token::Client::new(&env, &payment_token);
-        let bond_client = token::Client::new(&env, &bond_token);
+// Replace these with your actual deployed Token IDs on Testnet
+const PAYMENT_TOKEN_ID = "CAS3J7GYCCXG6S27SVD6S5V7E6V7E6V7E6V7E6V7E6V7E6V7E6V7E6V7"; // e.g., Mock USDC
+const BOND_TOKEN_ID = "CB667TFFB6V6V6V6V6V6V6V6V6V6V6V6V6V6V6V6V6V6V6V6V6V6V6V6";    // e.g., Bond-Backed Stablecoin
 
-        // 3. Transfer payment from Buyer to the Marketplace (Escrow)
-        payment_client.transfer(&buyer, &env.current_contract_address(), &amount);
+export const buyBondToken = async (userAddress, amount) => {
+  console.log("Initiating Bond Purchase Transaction...");
 
-        // 4. Send the Bond-Backed Stablecoins to the Buyer's wallet
-        // Note: For a real bond, the Marketplace would be the "Issuer"
-        bond_client.transfer(&env.current_contract_address(), &buyer, &amount);
+  if (!(await isConnected())) {
+    throw new Error("Freighter not connected");
+  }
 
-        // 5. Emit a success event for your frontend AnimatedList
-        env.events().publish(
-            (symbol_short!("buy_bond"), buyer),
-            amount
-        );
+  const { address } = await requestAccess();
+  if (!address) throw new Error("User denied access");
+
+  try {
+    const account = await server.loadAccount(address);
+    const contract = new StellarSdk.Contract(MARKETPLACE_CONTRACT_ID);
+
+    // Prepare the arguments for buy_bond(buyer, payment_token, bond_token, amount)
+    // Match the order and types in your lib.rs
+    const params = [
+      new StellarSdk.Address(address).toScVal(),             // buyer
+      new StellarSdk.Address(PAYMENT_TOKEN_ID).toScVal(),    // payment_token
+      new StellarSdk.Address(BOND_TOKEN_ID).toScVal(),       // bond_token
+      StellarSdk.nativeToScVal(amount, { type: "i128" }),    // amount
+    ];
+
+    console.log("Building Soroban Contract Call...");
+    const tx = new StellarSdk.TransactionBuilder(account, {
+      fee: StellarSdk.BASE_FEE,
+      networkPassphrase: StellarSdk.Networks.TESTNET,
+    })
+      .addOperation(contract.call("buy_bond", ...params))
+      .setTimeout(30)
+      .build();
+
+    const xdr = tx.toXDR();
+    console.log("Requesting Signature from Freighter...");
+    
+    const signedResponse = await signTransaction(xdr, { 
+      network: "TESTNET",
+      networkPassphrase: StellarSdk.Networks.TESTNET 
+    });
+
+    // Handle different Freighter return formats to prevent 'e6.switch' error
+    const signedXdr = typeof signedResponse === 'string' 
+      ? signedResponse 
+      : (signedResponse.signedTxXdr || signedResponse.xdr);
+
+    if (signedXdr) {
+      console.log("Submitting to network...");
+      const transactionToSubmit = new StellarSdk.Transaction(signedXdr, StellarSdk.Networks.TESTNET);
+      const result = await server.submitTransaction(transactionToSubmit);
+      
+      console.log("Transaction Success! Hash:", result.hash);
+      return { status: "success", txHash: result.hash };
+    } else {
+      throw new Error("User rejected signature");
     }
-}
+  } catch (error) {
+    console.error("Bond Purchase Failed:", error);
+    throw new Error(`Blockchain Error: ${error.message || "Unknown error"}`);
+  }
+};

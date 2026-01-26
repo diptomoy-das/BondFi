@@ -240,11 +240,42 @@ export const mockApi = {
 
             // Create Wallet
             const wallets = getStorage(STORAGE_KEYS.WALLETS);
-            wallets.push({ email: body.email, usdc_balance: 100.0 });
+            wallets.push({ email: body.email, usdc_balance: 100.0, stablecoin_count: 0 });
             setStorage(STORAGE_KEYS.WALLETS, wallets);
 
             const token = createFakeToken(body.email);
             return { data: { token, user: newUser } };
+        }
+
+        if (url.endsWith('/wallet/reward')) {
+            const email = getEmailFromToken();
+            const wallets = getStorage(STORAGE_KEYS.WALLETS);
+            const walletIndex = wallets.findIndex(w => w.email === email);
+
+            if (walletIndex === -1) throw { response: { status: 404, data: { detail: "Wallet not found" } } };
+
+            // Reward: Increase balance AND stablecoin count
+            wallets[walletIndex].usdc_balance += body.amount;
+            wallets[walletIndex].stablecoin_count = (wallets[walletIndex].stablecoin_count || 0) + body.amount;
+            setStorage(STORAGE_KEYS.WALLETS, wallets);
+
+            // Create Reward Transaction
+            const txn = {
+                id: `txn_${Date.now()}`,
+                email,
+                bond_id: 'reward',
+                bond_country: 'Blockchain Reward',
+                amount: 0, // It's a free reward, didn't cost anything? Or should we show +1 value?
+                tokens_received: body.amount,
+                timestamp: new Date().toISOString(),
+                transaction_type: 'deposit' // Reuse deposit type for green arrow
+            };
+
+            const txns = getStorage(STORAGE_KEYS.TRANSACTIONS);
+            txns.push(txn);
+            setStorage(STORAGE_KEYS.TRANSACTIONS, txns);
+
+            return { data: { message: "Reward received", new_balance: wallets[walletIndex].usdc_balance } };
         }
 
         if (url.endsWith('/auth/login')) {

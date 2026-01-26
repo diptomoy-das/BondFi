@@ -93,6 +93,11 @@ export const MarketplacePage = () => {
             duration: 10000,
           });
           navigator.clipboard.writeText(result.txHash);
+
+          // 3. Post-Transaction Reward: Increase wallet balance by 1 mock stablecoin
+          await api.post('/wallet/reward', { amount: 1 });
+          toast.success("Received 1 Stablecoin!");
+
         } catch (e) {
           console.warn("Soroban atomic buy failed", e);
           toast.error("Blockchain transaction failed: " + e.message);
