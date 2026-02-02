@@ -1,0 +1,47 @@
+@import "tailwindcss";
+
+:root {
+  --background: #000000;
+  --foreground: #ffffff;
+  --bond-black: #000000;
+  --bond-gray: #1a1a1a;
+  --text-dim: rgba(255, 255, 255, 0.9);
+  --stellar-blue: #3b82f6;
+  --stellar-gold: #eab308;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-bond-black: var(--bond-black);
+  --color-bond-gray: var(--bond-gray);
+  --color-text-dim: var(--text-dim);
+  --color-stellar-blue: var(--stellar-blue);
+  --color-stellar-gold: var(--stellar-gold);
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-jetbrains-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Hide Next.js Dev Indicator */
+[data-nextjs-toast],
+div:has(> [data-nextjs-toast]),
+.nextjs-toast-errors-parent,
+nextjs-portal,
+#nextjs-dev-indicator {
+  display: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}

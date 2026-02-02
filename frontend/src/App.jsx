@@ -8,6 +8,7 @@ import { DashboardPage } from "./pages/DashboardPage";
 import { MarketplacePage } from "./pages/MarketplacePage";
 import { WalletPage } from "./pages/WalletPage";
 import { EducationPage } from "./pages/EducationPage";
+import { IntroLandingPage } from "./pages/IntroLandingPage"; // Added import
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import { isAuthenticated } from "./utils/auth";
 import { WalletProvider } from "./context/WalletContext";
@@ -18,7 +19,7 @@ function App() {
       <WalletProvider>
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<LandingPage />} />
+            <Route path="/" element={<IntroLandingPage />} /> {/* Changed root route */}
             <Route
               path="/login"
               element={isAuthenticated() ? <Navigate to="/dashboard" replace /> : <LoginPage />}
