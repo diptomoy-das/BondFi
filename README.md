@@ -1,4 +1,4 @@
-# [Project Name]
+# BondFi
 
 [![Blockchain](https://img.shields.io/badge/Blockchain-Stellar-blueviolet?style=for-the-badge&logo=stellar)](https://stellar.org)
 [![Framework](https://img.shields.io/badge/Smart_Contracts-Soroban-black?style=for-the-badge&logo=rust)](https://soroban.stellar.org)
