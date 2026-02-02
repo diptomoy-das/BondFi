@@ -6,7 +6,7 @@
 [![Backend](https://img.shields.io/badge/Backend-Python-3776AB?style=for-the-badge&logo=python)](https://www.python.org)
 
 A decentralized application (DApp) designed to provide fractional ownership of government bonds. This platform leverages blockchain technology to make high-value financial assets accessible, transparent, and liquid for all investors.
-# URL: bondfi.up.railway.app
+# URL: https://bondfi.up.railway.app/
 
 ---
 
