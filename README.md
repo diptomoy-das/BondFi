@@ -19,6 +19,25 @@ A decentralized application (DApp) designed to provide fractional ownership of g
 
 ---
 
+## 📸 Screenshots
+
+### Registration
+![Registration](screenshots/registration.png)
+
+### Marketplace
+![Marketplace](screenshots/marketplace.png)
+
+### Wallet
+![Wallet](screenshots/wallet.png)
+
+### Dashboard
+![Dashboard](screenshots/dashboard.png)
+
+### Government Bonds
+![Government Bonds](screenshots/bonds.jpg)
+
+---
+
 ## 🛠️ Tech Stack
 
 ### Frontend
