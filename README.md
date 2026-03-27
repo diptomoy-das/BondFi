@@ -24,7 +24,7 @@ A decentralized application (DApp) designed to provide fractional ownership of g
 ### Registration
 ![Registration](screenshots/registration.png)
 
-### Marketplace
+### Marketplace(Transactions)
 ![Marketplace](screenshots/marketplace.png)
 
 ### Wallet
