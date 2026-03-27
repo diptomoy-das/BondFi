@@ -14,7 +14,9 @@ BondFi is a decentralized application (DApp) that enables **fractional ownership
 
 ### 🎬 Demo Video
 
-<video src="https://github.com/diptomoy-das/BondFi/raw/main/screenshots/demo-video-compressed.mp4" controls="controls" muted="muted" playsinline="playsinline" width="100%"></video>
+https://github.com/user-attachments/assets/demo-video.mp4
+
+> *If the video does not render above, you can find it at [`screenshots/demo-video.mp4`](screenshots/demo-video.mp4).*
 
 <details>
 <summary><strong>📷 View Screenshots</strong></summary>
