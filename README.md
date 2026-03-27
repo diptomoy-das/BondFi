@@ -24,7 +24,7 @@ https://github.com/user-attachments/assets/demo-video.mp4
 ### Registration
 ![Registration](screenshots/registration.png)
 
-### Marketplace
+### Marketplace(Transactions)
 ![Marketplace](screenshots/marketplace.png)
 
 ### Wallet
